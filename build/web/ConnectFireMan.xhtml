@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+       xmlns:h="http://xmlns.jcp.org/jsf/html"
+       xmlns:f="http://xmlns.jcp.org/jsf/core"
+       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+       xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+    <head>
+        <title>TODO supply a title</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+    <h:body>
+        
+        <h:form>
+                
+
+            <c:if test="${ctr.managed.countRoute0() }">
+                
+                <ui:repeat var= "sertarien" value="#{ctr.stringListf}" varStatus="loop">
+                <h:outputLabel for="PVNi">Fire Truck Name #{loop.index+1}:</h:outputLabel>
+                <h:inputText value="#{ctr.stringListf[loop.index]}" />
+                <br />
+            </ui:repeat> 
+                               
+                 <h:outputLabel for="routePV">Police Vehicles Route :</h:outputLabel>
+                 <h:outputLabel>#{ctr.routep}</h:outputLabel>
+                 <br />
+              <h:outputLabel for="routeFT">Fire Trucks Route :</h:outputLabel>
+              <h:outputLabel for="routeFT">#{ctr.routef}</h:outputLabel>
+              <br />
+              <h:commandButton type="submit"              
+                               value="agrees for Fire Route and Police Route" action="VehicleState.xhtml"> 
+                  <f:actionListener binding= "#{ctr.fire.route_for_fire_trucks(ctr.routef)}"/>
+                  <f:actionListener binding= "#{ctr.police.route_for_police_vehicles(ctr.routep)}"/>
+
+                   <c:forEach var="i" begin="0" end="#{ctr.ftn-1}">       
+                <f:actionListener binding="#{ctr.managed.createSessionFireTruck(ctr.stringListf[i], i+1)}"/>
+                </c:forEach>
+                
+              </h:commandButton>
+                 <h:commandButton type="submit"              
+                             value="agrees just for Fire truck" action="ConnectPoliceMan.xhtml"> 
+                     <f:actionListener binding= "#{ctr.fire.route_for_fire_trucks(ctr.routef)}"/>                
+                     <f:actionListener binding= "#{ctr.police.route_for_police_vehicles(ctr.routep)}"/>
+                     <f:actionListener binding= "#{ctr.emptyRoutep()}"/>
+                     <f:actionListener binding= "#{ctr.fire.FSC_agrees_about_fire_truck_route()}"/>
+                     <f:actionListener binding= "#{ctr.fire.FSC_disagrees_about_police_vehicle_route()}"/>
+              </h:commandButton>
+               <h:commandButton type="submit"              
+                             value="agrees just for Police Vehicle" action="ConnectPoliceMan.xhtml"> 
+                      <f:actionListener binding= "#{ctr.fire.route_for_fire_trucks(ctr.routef)}"/>                  
+                      <f:actionListener binding= "#{ctr.police.route_for_police_vehicles(ctr.routep)}"/>
+                      <f:actionListener binding= "#{ctr.emptyRoutef()}"/>
+                        <f:actionListener binding= "#{ctr.fire.FSC_agrees_about_police_vehicle_route()}"/>
+                        <f:actionListener binding= "#{ctr.fire.FSC_disagrees_about_fire_truck_route()}"/>
+              </h:commandButton>
+              
+                               <h:commandButton type="submit"              
+                             value="disagrees just for Police Vehicle and Fire truck" action="ConnectPoliceMan.xhtml"> 
+                      <f:actionListener binding= "#{ctr.fire.route_for_fire_trucks(ctr.routef)}"/>                  
+                      <f:actionListener binding= "#{ctr.police.route_for_police_vehicles(ctr.routep)}"/>
+                      <f:actionListener binding= "#{ctr.fire.FSC_disagrees_about_fire_truck_route()}"/>
+                      <f:actionListener binding= "#{ctr.fire.FSC_disagrees_about_police_vehicle_route()}"/>
+                      <f:actionListener binding= "#{ctr.emptyRoutef()}"/>
+                      <f:actionListener binding= "#{ctr.emptyRoutef()}"/>
+                        
+              </h:commandButton>
+              
+
+
+              
+              </c:if>  
+                                                                                            
+          
+            <c:if test="${ ctr.managed.countroutepolice() and not ctr.managed.countRoute0()}">
+                 <h:outputLabel for="routePV">Police Vehicles Route :</h:outputLabel>
+                 <h:outputLabel>#{ctr.routep}</h:outputLabel>
+              <h:commandButton type="submit"              
+                               value="agrees" action="VehicleState.xhtml">
+                  <f:actionListener binding= "#{ctr.police.route_for_police_vehicles(ctr.routep)}"/>
+                              <f:actionListener binding= "#{ctr.fire.FSC_agrees_about_police_vehicle_route()}"/>                                                                         
+              </h:commandButton>
+                 <h:commandButton type="submit"               
+                             value="disagrees" action="ConnectPoliceMan.xhtml">
+                     <f:actionListener binding= "#{ctr.police.route_for_police_vehicles(ctr.routep)}"/>
+                     <f:actionListener binding= "#{ctr.fire.FSC_disagrees_about_police_vehicle_route()}"/>
+                            <f:actionListener binding= "#{ctr.emptyRoutep()}"/>                                                                         
+              </h:commandButton>
+              <br />
+            </c:if>  
+            
+            <c:if test="${ctr.managed.countroutefire() and not ctr.managed.countRoute0()}">
+                 <h:outputLabel for="routePV">Fire Trucks Route :</h:outputLabel>
+                 <h:outputLabel>#{ctr.routef}</h:outputLabel>
+              <h:commandButton type="submit"              
+                               value="agrees" action="VehicleState.xhtml">
+                  <f:actionListener binding= "#{ctr.fire.route_for_fire_trucks(ctr.routef)}"/> 
+                              <f:actionListener binding= "#{ctr.fire.FSC_agrees_about_fire_truck_route()}"/>                                                                        
+              </h:commandButton>
+                 <h:commandButton type="submit"              
+                             value="disagrees" action="ConnectPoliceMan.xhtml">
+                     <f:actionListener binding= "#{ctr.fire.route_for_fire_trucks(ctr.routef)}"/> 
+                     <f:actionListener binding= "#{ctr.fire.FSC_disagrees_about_fire_truck_route()}"/>
+                             <f:actionListener binding= "#{ctr.emptyRoutef()}"/>                                                                         
+              </h:commandButton>
+              <br />
+            </c:if>  
+            
+                 
+                 
+            <br />
+            <br />
+             </h:form>
+           
+    </h:body>
+</html>

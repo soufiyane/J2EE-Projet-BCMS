@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+       xmlns:h="http://xmlns.jcp.org/jsf/html"
+       xmlns:f="http://xmlns.jcp.org/jsf/core"
+       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+       xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+    <head>
+        <title>TODO supply a title</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+    <h:body>
+        #{ctr.Init()}
+        
+            <h:form>
+            
+            <h:outputLabel for="mname1">Vehicles Number :</h:outputLabel>
+            <h:inputText id="mname" value="#{input1}" >
+            </h:inputText>
+            <br />
+            <h:commandButton type="submit"              
+                             value="Ok" action="ConnectPoliceMan.xhtml">
+                 <f:actionListener binding= "#{ctr.set_Pvn(ctr.tointeger(input1))}"/>
+                 </h:commandButton>
+                
+                 
+	   </h:form>
+           
+    </h:body>
+</html>

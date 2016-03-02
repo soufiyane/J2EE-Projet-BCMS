@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+       xmlns:h="http://xmlns.jcp.org/jsf/html"
+       xmlns:f="http://xmlns.jcp.org/jsf/core"
+       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+       xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+    <head>
+        <title>TODO supply a title</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+    <h:body>
+        
+        <script type="text/javascript" language="javascript">
+function getInputText(text)
+{
+alert(text.value);
+}
+</script>
+        
+        <h:form>
+            
+            <c:if test="${ctr.managed.countRoute0()}">
+            <ui:repeat var= "sertarien" value="#{ctr.stringList}" varStatus="loop">
+                <h:outputLabel for="PVN">Police Vehicle Name #{loop.index+1}:</h:outputLabel>
+                <h:inputText value="#{ctr.stringList[loop.index]}" />
+                <br />
+            </ui:repeat>
+          
+          
+                 <h:outputLabel for="routePV">Police Vehicles  Route:</h:outputLabel>
+                 <h:inputText value="#{ctr.routep}" id="Proute" />
+                  
+             <br />
+              <h:outputLabel for="routeFT">Fire   Trucks   Route:</h:outputLabel>
+              <h:inputText value="#{ctr.routef}" id="Froute" />
+              <br />       
+        
+                 
+                <h:commandButton type="submit"              
+                             value="add" action="index.xhtml">
+                
+                       
+                <f:actionListener binding= "#{ctr.managed.createRouteFire(ctr.routef)}"/>
+                
+                <f:actionListener binding= "#{ctr.managed.createRoutePolice(ctr.routep)}"/>
+                
+                    
+                <c:forEach var="i" begin="0" end="#{ctr.pvn-1}">       
+                <f:actionListener binding= "#{ctr.managed.createSessionPoliceVehicle(ctr.stringList[i], i+1)}"/>
+                </c:forEach>
+                    
+                    
+                    <!--{ctr.viderliste()}-->
+                 <!--<f:actionListener binding= "ConnectFireMan.xhtml"/>-->
+                 </h:commandButton>
+            </c:if>
+             </h:form> 
+        
+        <c:if test="${ctr.managed.countroutepolice() and not ctr.managed.countRoute0()}">  
+            <h:form>
+            <h:outputLabel for="routePV">Police Vehicle Route:</h:outputLabel>
+            <h:inputText value="#{ctr.routep}" id="Pproute" />     
+                            <h:commandButton type="submit"              
+                             value="add" action="ConnectFireMan.xhtml">
+                 <f:actionListener binding= "#{ctr.managed.createRoutePolice(ctr.routep)}"/>   
+                             </h:commandButton>
+            </h:form>
+            </c:if>
+            <c:if test="${ctr.managed.countroutefire() and not ctr.managed.countRoute0()}">
+                <h:form>
+            <h:outputLabel for="routeFT">Fire   Trucks   Route:</h:outputLabel>
+            <h:inputText value="#{ctr.routef}" id="Ffroute" />
+                             <h:commandButton type="submit"              
+                             value="add" action="ConnectFireMan.xhtml">
+               <f:actionListener binding= "#{ctr.managed.createRouteFire(ctr.routef)}"/> 
+                             </h:commandButton>
+            </h:form>
+            </c:if>
+        
+                    
+
+
+            
+            
+
+            
+           
+    </h:body>
+</html>
